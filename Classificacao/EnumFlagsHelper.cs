@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Classificacao.Test;
 public static class EnumFlagsHelper
 {
@@ -98,6 +100,29 @@ public static class EnumFlagsHelper
     }
 
 
+    ///// <summary>
+    ///// Obtém uma string contendo os nomes das flags ativadas em um enum do tipo Flags.
+    ///// </summary>
+    ///// <typeparam name="T">Tipo do enum (deve ser um Enum com atributo Flags).</typeparam>
+    ///// <param name="flags">O valor do enum cujas flags serão analisadas.</param>
+    ///// <returns>Uma string contendo os nomes das flags ativadas, separadas por vírgula.</returns>
+    //public static string GetDescriptionFlags<T>(this T flags) where T : Enum
+    //{
+    //    // Obtém todos os valores do enum passado como parâmetro.
+    //    var selectedFlags = Enum.GetValues(typeof(T))
+    //        .Cast<T>() // Converte os valores obtidos para o tipo genérico T.
+    //        .Where(flag =>
+    //            Convert.ToInt32(flags) != 0 && // Garante que o valor de flags não é zero.
+    //            flags.HasFlag(flag) && // Verifica se a flag específica está definida.
+    //            Convert.ToInt32(flag) != 0) // Exclui o caso de uma flag que seja zero.
+    //        .Select(flag => flag.ToString()); // Converte a flag para string.
+
+    //    // Junta todas as flags ativadas em uma única string separada por vírgula.
+    //    return string.Join(", ", selectedFlags);
+    //}
+
+
+
     /// <summary>
     /// Obtém uma string contendo os nomes das flags ativadas em um enum do tipo Flags.
     /// </summary>
@@ -106,18 +131,60 @@ public static class EnumFlagsHelper
     /// <returns>Uma string contendo os nomes das flags ativadas, separadas por vírgula.</returns>
     public static string GetDescriptionFlags<T>(this T flags) where T : Enum
     {
-        // Obtém todos os valores do enum passado como parâmetro.
-        var selectedFlags = Enum.GetValues(typeof(T))
-            .Cast<T>() // Converte os valores obtidos para o tipo genérico T.
-            .Where(flag =>
-                Convert.ToInt32(flags) != 0 && // Garante que o valor de flags não é zero.
-                flags.HasFlag(flag) && // Verifica se a flag específica está definida.
-                Convert.ToInt32(flag) != 0) // Exclui o caso de uma flag que seja zero.
-            .Select(flag => flag.ToString()); // Converte a flag para string.
+        // Obtém um array com todos os valores possíveis do enum.
+        Array enumValues = Enum.GetValues(typeof(T));
 
-        // Junta todas as flags ativadas em uma única string separada por vírgula.
-        return string.Join(", ", selectedFlags);
+        // StringBuilder para armazenar o resultado da concatenação.
+        StringBuilder result = new StringBuilder();
+
+        // Converte o valor do enum passado para inteiro.
+        int flagsValue = Convert.ToInt32(flags);
+
+        // Verifica se flags não é zero, pois zero pode indicar "nenhuma flag definida".
+        if (flagsValue == 0)
+        {
+            return string.Empty;
+        }
+
+        // Itera sobre todos os valores do enum.
+        foreach (object value in enumValues)
+        {
+            // Converte o valor atual para inteiro.
+            int enumIntValue = Convert.ToInt32(value);
+
+            // Se o valor do enum for zero, ignora (para evitar adicionar "Nenhuma" ou valores inválidos).
+            if (enumIntValue == 0)
+            {
+                continue;
+            }
+            //Cliente = 1,          // 0001
+            //Fornecedor = 2,       // 0010
+            //Transportadora = 4,   // 0100
+            //Funcionario = 8,      // 1000
+            //Vendedor = 16,        // 10000
+            //Fabricante = 32,      // 100000
+            //Representante = 64,   // 1000000
+
+            var flagsValue_enumINtValue = (flagsValue & enumIntValue);
+            // Verifica se a flag está definida no valor passado.
+            if (flagsValue_enumINtValue == enumIntValue)
+            {
+                // Se já houver algum valor no StringBuilder, adiciona uma vírgula antes.
+                if (result.Length > 0)
+                {
+                    result.Append(", ");
+                }
+
+                // Adiciona o nome da flag ao resultado.
+                result.Append(value.ToString());
+            }
+        }
+
+        // Retorna o resultado como string.
+        return result.ToString();
     }
+
+
 
     /// <summary>
     /// Obtém uma lista de strings contendo os nomes das flags ativadas em um enum do tipo Flags.

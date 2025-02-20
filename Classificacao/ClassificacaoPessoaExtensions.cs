@@ -3,22 +3,22 @@ namespace Classificacao.Test;
 public static class ClassificacaoPessoaExtensions
 {
      private static readonly Random _random = new Random();
-    public static List<string> GetClassificacoes(this ClassificacaoPessoa classificacao)
-    {
-        var classificacoes = new List<string>();
+    //public static List<string> GetClassificacoes(this ClassificacaoPessoa classificacao)
+    //{
+    //    var classificacoes = new List<string>();
 
-        // Itera sobre todos os valores do enum
-        foreach (ClassificacaoPessoa value in Enum.GetValues(typeof(ClassificacaoPessoa)))
-        {
-            // Verifica se o valor atual está presente no campo 'classificacao'
-            if (classificacao.HasFlag(value) && value != ClassificacaoPessoa.Pessoa)
-            {
-                classificacoes.Add(value.ToString());
-            }
-        }
+    //    // Itera sobre todos os valores do enum
+    //    foreach (ClassificacaoPessoa value in Enum.GetValues(typeof(ClassificacaoPessoa)))
+    //    {
+    //        // Verifica se o valor atual está presente no campo 'classificacao'
+    //        if (classificacao.HasFlag(value) && value != ClassificacaoPessoa.Pessoa)
+    //        {
+    //            classificacoes.Add(value.ToString());
+    //        }
+    //    }
 
-        return classificacoes;
-    }
+    //    return classificacoes;
+    //}
 
     public static ClassificacaoPessoa GetRandomClassificacao()
     {
