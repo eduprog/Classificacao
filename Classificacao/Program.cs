@@ -36,6 +36,11 @@ foreach (var pessoa in pessoas)
     Console.WriteLine($"Nome: {pessoa.Nome}");
     Console.WriteLine($"Classificação: {pessoa.Classificacao} -  {pessoa.Classificacao.GetDescriptionFlags()}");
     Console.WriteLine(new string('-', 40));
+    foreach (string classificacao in pessoa.Classificacao.GetDescriptionFlagList())
+    {
+        Console.WriteLine($"Classificação: {classificacao}");
+    }
+    Console.WriteLine(new string('-', 40));
     // Console.WriteLine("ENDEREÇO:");
     // Console.WriteLine($"Nome: {pessoa.Endereco.Nome}");
     // Console.WriteLine($"Tipo: {pessoa.Endereco.Tipo.GetDescriptionFlags()}");
