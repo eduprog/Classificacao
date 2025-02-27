@@ -185,6 +185,40 @@ public static class EnumFlagsHelper
     }
 
 
+    /// <summary>
+    /// Obtém uma lista contendo as flags ativadas em um enum do tipo Flags.
+    /// </summary>
+    /// <typeparam name="T">Tipo do enum (deve ser um Enum com atributo Flags).</typeparam>
+    /// <param name="flags">O valor do enum cujas flags serão analisadas.</param>
+    /// <returns>Uma lista contendo as flags ativadas.</returns>
+    public static List<T> GetActiveFlags<T>(this T flags) where T : Enum
+    {
+        var activeFlags = new List<T>();
+
+        // Obtém todos os valores do enum e converte para inteiro
+        foreach (T value in Enum.GetValues(typeof(T)))
+        {
+            int enumIntValue = Convert.ToInt32(value);
+            int flagsValue = Convert.ToInt32(flags);
+
+            // Ignora o valor 0 (nenhuma flag definida)
+            if (enumIntValue == 0)
+            {
+                continue;
+            }
+
+            // Verifica se a flag está definida no valor passado
+            if ((flagsValue & enumIntValue) == enumIntValue)
+            {
+                activeFlags.Add(value);
+            }
+        }
+
+        return activeFlags;
+    }
+
+
+
 
     /// <summary>
     /// Obtém uma lista de strings contendo os nomes das flags ativadas em um enum do tipo Flags.
