@@ -4,7 +4,7 @@ namespace Classificacao.Test;
 //[Flags]
 public enum ClassificacaoPessoa
 {
-    Pessoa = 0,           // 0000
+    //Pessoa = 0,           // 0000
     Cliente = 1,          // 0001
     Fornecedor = 2,       // 0010
     Transportadora = 4,   // 0100
@@ -12,7 +12,7 @@ public enum ClassificacaoPessoa
     Vendedor = 16,        // 10000
     Fabricante = 32,      // 100000
     Representante = 64,   // 1000000
-    Outros = 128          // 10000000
+   // Outros = 128          // 10000000
 }
 
 
