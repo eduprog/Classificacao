@@ -56,7 +56,7 @@ internal class Program
         // Exibir as pessoas geradas
         foreach (var pessoa in pessoas)
         {
-            var flagValida = pessoa.Classificacao.EhBitFlagValido();
+            var flagValida = pessoa.Classificacao.BitFlagIsValid();
             Console.ResetColor();
             Console.WriteLine($"{new string('-', 5)}|Pessoa {pessoa.Id} - {pessoa.Nome}|{new string('-', 5)}");
             //Console.WriteLine($"ID: {pessoa.Id}");
@@ -79,14 +79,14 @@ internal class Program
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{new string('-', 20)}|List string's separado por vírgula|{new string('-', 20)}");
-            Console.WriteLine($"Classificação: {pessoa.Classificacao} -  {pessoa.Classificacao.GetDescriptionFlags()}");
+            Console.WriteLine($"Classificação: {pessoa.Classificacao} -  {pessoa.Classificacao.GetDescriptionFlagsToString()}");
 
 
 
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{new string('-', 20)}|List string's|{new string('-', 20)}");
-            foreach (string classificacao in pessoa.Classificacao.GetDescriptionFlagList())
+            foreach (string classificacao in pessoa.Classificacao.GetDescriptionFlagToList())
             {
                 Console.WriteLine($"Classificação: {classificacao}");
             }
@@ -102,7 +102,7 @@ internal class Program
             Console.WriteLine();
             // Console.WriteLine("ENDEREÇO:");
             // Console.WriteLine($"Nome: {pessoa.Endereco.Nome}");
-            // Console.WriteLine($"Tipo: {pessoa.Endereco.Tipo.GetDescriptionFlags()}");
+            // Console.WriteLine($"Tipo: {pessoa.Endereco.Tipo.GetDescriptionFlagsToString()}");
             // Console.WriteLine(new string('-', 40));
         }
         Console.ResetColor();
